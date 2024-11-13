@@ -13,7 +13,7 @@ const PayrollForm = () => {
     const { handleIdForPayroll } = useContext(UserContext);
     const navigate = useNavigate();
 
-    // Get current date in YYYY-MM-DD format
+
     const currentDate = new Date().toISOString().split('T')[0];
 
     const handleSubmit = async (e) => {

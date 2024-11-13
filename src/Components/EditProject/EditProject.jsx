@@ -26,6 +26,7 @@ const EditProject = () => {
       try {
         if (projectId) {
           const response = await axios.get(
+          
             `http://localhost:3000/api/v1/projects/${projectId}/employees`
           );
           setEmployees(response.data.employees);
@@ -70,7 +71,7 @@ const EditProject = () => {
         alert("The deadline cannot be a past date.");
         return;
       }
-
+console.log(`http://localhost:3000/api/v1/projects/${projectId}/tasks/new`)
       const response = await axios.post(
         `http://localhost:3000/api/v1/projects/${projectId}/tasks/new`,
         {
@@ -80,6 +81,7 @@ const EditProject = () => {
           assignedEmployees: [assignedEmployees],
         }
       );
+      
 
       if (response.status === 201) {
         setSuccessMessage("Task assigned successfully");
@@ -95,17 +97,34 @@ const EditProject = () => {
   };
 
   const handleRemoveEmployee = async (employeeId) => {
+  
+    if (employees.length === 1) {
+      alert("At least one employee must remain in the project.");
+      return;
+    }
+  
     try {
+    
       await axios.delete(
         `http://localhost:3000/api/v1/projects/${projectId}/employee/${employeeId}`
       );
-      setEmployees(employees.filter((employee) => employee.id !== employeeId));
+  
+      setEmployees((prevEmployees) =>
+        prevEmployees.filter((employee) => employee._id !== employeeId)
+      );
+  
       setSuccessMessage("Employee removed successfully");
-    } catch (error) {
+      window.location.reload(); 
+   
+    }
+   
+    catch (error) {
       console.error("Error removing employee:", error);
       setError("Failed to remove employee from the project.");
     }
   };
+  
+  
 
   const handleAddEmployeeToProject = async () => {
     if (!selectedUser) {
@@ -134,6 +153,7 @@ const EditProject = () => {
         ]);
         setSelectedUser("");
       }
+      window.location.reload(); 
     } catch (error) {
       console.error("Error adding employee to the project:", error);
       setError("Failed to add employee to the project.");
