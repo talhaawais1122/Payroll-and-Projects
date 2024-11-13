@@ -13,6 +13,8 @@ export default function GenratePayRollForSingleEmployee() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const currentDate = new Date().toISOString().split('T')[0];
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -89,6 +91,7 @@ export default function GenratePayRollForSingleEmployee() {
                         type="date"
                         id="startDate"
                         value={startDate}
+                        max={currentDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         required
                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -100,6 +103,7 @@ export default function GenratePayRollForSingleEmployee() {
                         type="date"
                         id="endDate"
                         value={endDate}
+                        max={currentDate}
                         onChange={(e) => setEndDate(e.target.value)}
                         required
                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
